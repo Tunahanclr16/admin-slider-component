@@ -31,6 +31,10 @@ function Slider() {
     if (savedSlides) {
       setSlides(savedSlides);
     }
+    const savedDelay = localStorage.getItem("delay");
+    if (savedDelay) {
+      setDelay(parseInt(savedDelay, 10));
+    }
   }, []);
 
   // Slaytta bulanıklık (blur) durumunu değiştiren fonksiyon
