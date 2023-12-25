@@ -106,13 +106,14 @@ function Slider() {
   }, []);
   return (
     <div className="overflow-hidden">
-      <h1 className="text-center text-4xl font-bold">Edit</h1>
-      <SliderForm
+      <h1 className="text-center text-4xl mt-2 font-bold">Edit</h1>
+    <div className="p-2">
+    <SliderForm
   slides={slides} // Doğru props'u geçirdiğinizden emin olun
   handleChange={handleChange}
   toggleBlur={toggleBlur}
   removeSlide={removeSlide}
-/>      
+/>  </div>    
 <div className="mt-4">
         <label htmlFor="delayInput" className="block font-bold">
           Delay (ms):
