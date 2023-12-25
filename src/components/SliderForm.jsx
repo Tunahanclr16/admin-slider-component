@@ -65,7 +65,7 @@ export default function SliderForm({
             id={`buttonText${index}`}
             placeholder="Button text"
             value={slide.buttonText}
-            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:gtext-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "buttonText", e.target.value)
             }
