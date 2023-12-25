@@ -10,11 +10,13 @@ import SliderForm from "./components/SliderForm";
 function Slider() {
   // Varsayılan slayt veri yapısı
   const defaultSlideData = {
-    backgroundImage: "",
-    mainImage: "",
-    mainText: "",
-    subText: "",
-    buttonText: "",
+    backgroundImage:
+      "https://fotolifeakademi.com/uploads/2020/04/manzara-fotografi-cekmek.jpg",
+    mainImage:
+      "https://fotolifeakademi.com/uploads/2020/04/manzara-fotografi-cekmek.jpg",
+    mainText: "Default Main Text",
+    subText: "Default Sub Text",
+    buttonText: "Default Button Text",
     isBlur: false,
   };
 
@@ -53,18 +55,18 @@ function Slider() {
   };
 
   // Yeni bir slayt eklemeye yarayan fonksiyon
-  const addNewSlide = () => {
-    const newSlide = {
-      backgroundImage: "",
-      mainImage: "",
-      mainText: "",
-      subText: "",
-      buttonText: "",
-    };
-    setSlides([...slides, newSlide]);
-    saveToLocalStorage([...slides, newSlide]);
+ const addNewSlide = () => {
+  const newSlide = {
+    backgroundImage:
+      "https://fotolifeakademi.com/uploads/2020/04/manzara-fotografi-cekmek.jpg",
+    mainImage: "https://fotolifeakademi.com/uploads/2020/04/manzara-fotografi-cekmek.jpg",
+    mainText: "Default Main Text",
+    subText: "Default Sub Text",
+    buttonText: "Default Button Text",
   };
-
+  setSlides([...slides, newSlide]);
+  saveToLocalStorage([...slides, newSlide]);
+};
   // Belirtilen indeksteki slaydı kaldıran fonksiyon
   const removeSlide = (index) => {
     const updatedSlides = slides.filter((_, idx) => idx !== index);
@@ -87,9 +89,13 @@ function Slider() {
     localStorage.setItem("delay", delay.toString());
   };
   useEffect(() => {
-    const savedDelay = localStorage.getItem("delay");
-    if (savedDelay) {
-      setDelay(parseInt(savedDelay, 10));
+    const savedSlides = JSON.parse(localStorage.getItem("slides"));
+    if (savedSlides && savedSlides.length > 0) {
+      setSlides(savedSlides);
+    } else {
+      // İlk açılışta varsayılan 2 slaytı ekle
+      setSlides([defaultSlideData, defaultSlideData]);
+      saveToLocalStorage([defaultSlideData, defaultSlideData]);
     }
   }, []);
   return (
