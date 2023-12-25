@@ -7,7 +7,7 @@ export default function SliderForm({
   removeSlide,
 }) {
   return (
-    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
+    <div className="grid grid-cols-1 xs:grid-cols-2  sm:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
       {slides.map((slide, index) => (
         <div key={index} className="flex flex-col items-center justify-center">
           <h3 className="font-bold sm:text-xl mt-5">Slider {index + 1}</h3>
@@ -17,7 +17,7 @@ export default function SliderForm({
             id={`backgroundImage${index}`}
             placeholder="Background Image"
             value={slide.backgroundImage}
-            className="w-full rounded text-white placeholder-text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "backgroundImage", e.target.value)
             }
@@ -29,7 +29,7 @@ export default function SliderForm({
             id={`mainImage${index}`}
             placeholder="Main Image"
             value={slide.mainImage}
-            className="w-full rounded text-white placeholder-text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "mainImage", e.target.value)
             }
@@ -41,7 +41,7 @@ export default function SliderForm({
             id={`mainText${index}`}
             placeholder="Main text"
             value={slide.mainText}
-            className="w-full rounded text-white placeholder-text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "mainText", e.target.value)
             }
@@ -53,7 +53,7 @@ export default function SliderForm({
             id={`subText${index}`}
             placeholder="Sub text"
             value={slide.subText}
-            className="w-full rounded text-white placeholder-text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "subText", e.target.value)
             }
@@ -65,7 +65,7 @@ export default function SliderForm({
             id={`buttonText${index}`}
             placeholder="Button text"
             value={slide.buttonText}
-            className="w-full rounded text-white placeholder-text-white h-10 bg-red-500"
+            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
             onChange={(e) =>
               handleChange(index, "buttonText", e.target.value)
             }
