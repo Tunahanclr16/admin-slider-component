@@ -102,6 +102,7 @@ export default function ModalForm({
           }
           className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
         />
+        <label htmlFor="">Main Image Height</label>
                 <input
           type="number"
           id={`mainImageHeight${index}`}
@@ -171,14 +172,13 @@ export default function ModalForm({
           />
           <div className="flex mx-auto max-w-[1400px] justify-between items-center absolute inset-0 sm:px-4">
             <div>
-              <img
-                className="sm:w-[400px] w-screen  mb-4 sm:mb-0 h-[250px] z-50 rounded object-cover"
-                src={slide.mainImage}
-                alt=""
-                style={{ width: slide.mainImageWidth,slide:slide.mainImageHeight}}
-              />
+            <img
+                      className="sm:w-[600px] w-screen  mb-4 sm:mb-0 h-[350px] z-50 rounded object-cover"
+                      src={slide.mainImage}
+                      alt=""
+                      style={{width:slide.mainImageWidth,height:slide.mainImageHeight}}
+                    />
             </div>
-
             <div className="hidden w-[500px] sm:flex gap-2 flex-col items-center">
             <h2
                 className="text-center text-white text-sm md:text-2xl lg:text-4xl font-semibold"
