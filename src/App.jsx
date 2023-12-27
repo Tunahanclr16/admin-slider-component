@@ -11,10 +11,18 @@ import BgPhoto from "../public/bgPhoto.jpg";
 function Slider() {
   const defaultSlideData = {
     backgroundImage: BgPhoto,
+    mainTextSize: 24,
+    subTextSize: 16,
+    buttonTextSize:12,
     mainImage: BgPhoto,
+    mainImageWidth:400,
     mainText: "Default Main Text",
     subText: "Default Sub Text",
     buttonText: "Default Button Text",
+    mainImageHeight:350,
+    mainTextColor: "#fff", // Default bir metin rengi ekleyin veya istediğiniz bir renk koduyla başlatın
+    subTextColor: "#fff", // Default bir metin rengi ekleyin veya istediğiniz bir renk koduyla başlatın
+    buttonTextColor: "#000", // Default bir metin rengi ekleyin veya istediğiniz bir renk koduyla başlatın
     isBlur: false,
   };
 
@@ -22,6 +30,7 @@ function Slider() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [delay, setDelay] = useState(4700);
 
+  
   useEffect(() => {
     const savedSlides = JSON.parse(localStorage.getItem("slides"));
     if (savedSlides) {
@@ -42,13 +51,17 @@ function Slider() {
     setSlides(updatedSlides);
     saveToLocalStorage(updatedSlides);
   };
-
   const handleChange = (index, field, value) => {
     const updatedSlides = [...slides];
-    updatedSlides[index][field] = value;
+    if (field === 'positions') {
+      updatedSlides[index].positions = value;
+    } else {
+      updatedSlides[index][field] = value;
+    }
     setSlides(updatedSlides);
     saveToLocalStorage(updatedSlides);
   };
+  
 
   const handleSave = () => {
     localStorage.setItem("slides", JSON.stringify(slides));
@@ -57,8 +70,13 @@ function Slider() {
   const addNewSlide = () => {
     const newSlide = {
       backgroundImage: BgPhoto,
+      mainImageWidth:400,
       mainImage: BgPhoto,
       mainText: "Default Main Text",
+      mainTextSize: 32,
+      subTextSize: 16,
+      mainImageHeight:350,
+      buttonTextSize:12,
       subText: "Default Sub Text",
       buttonText: "Default Button Text",
     };
@@ -96,7 +114,6 @@ function Slider() {
       saveToLocalStorage([defaultSlideData, defaultSlideData]);
     }
   }, []);
-
   return (
     <div className="overflow-hidden">
       <h1 className="text-center text-4xl mt-2 font-bold">Edit</h1>
@@ -165,22 +182,35 @@ function Slider() {
                       className="sm:w-[600px] w-screen  mb-4 sm:mb-0 h-[350px] z-50 rounded object-cover"
                       src={slide.mainImage}
                       alt=""
+                      style={{width:slide.mainImageWidth,height:slide.mainImageHeight}}
                     />
                   </div>
 
                   <div className="hidden w-[500px] sm:flex gap-2 flex-col items-center">
-                    <h2 className="text-center text-white text-sm md:text-2xl lg:text-4xl font-semibold">
+                  <h2
+                      className="text-center text-white text-sm md:text-2xl lg:text-4xl font-semibold"
+                      style={{
+                        color: slide.mainTextColor,
+                        fontSize: `${slide.mainTextSize}px`, // Metin boyutunu burada ayarlıyoruz
+                      }}
+                    >
                       {slide.mainText}
                     </h2>
-                    <p className="text-center text-white text-xs sm:text-base md:text-xl">
+                    <p
+                      className="text-center text-white text-xs sm:text-base md:text-xl"
+                      style={{ color: slide.subTextColor }}
+                    >
                       {slide.subText}
                     </p>
-                    <button className="p-2 bg-white rounded-xl font-bold m-2 hover:rotate-6 transition-all md:text-md lg:text-lg xl:text-xl 4xl:text-2xl">
+                    <button
+                      className="p-2 bg-white rounded-xl font-bold m-2 hover:rotate-6 transition-all md:text-md lg:text-lg xl:text-xl 4xl:text-2xl"
+                      style={{ color: slide.buttonTextColor,fontSize:`${slide.buttonTextSize}px` }}
+                    >
                       {slide.buttonText}
                     </button>
                   </div>
                 </div>
-                <SliderNav />
+                        <SliderNav/>
               </div>
             </SwiperSlide>
           </div>

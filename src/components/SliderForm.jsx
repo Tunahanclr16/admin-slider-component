@@ -1,90 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import ModalForm from "./ModalForm";
 
 export default function SliderForm({
   slides,
   handleChange,
   toggleBlur,
+  handleNewButton,
+  setShowNewButton,
   removeSlide,
 }) {
+  const [showModal, setShowModal] = useState(false);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(null);
+
+  const openModal = (index) => {
+    setCurrentSlideIndex(index);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className="grid grid-cols-1 xs:grid-cols-2  sm:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
+    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
       {slides.map((slide, index) => (
         <div key={index} className="flex flex-col items-center justify-center">
-          <h3 className="font-bold sm:text-xl mt-5">Slider {index + 1}</h3>
-          <label htmlFor={`backgroundImage${index}`}>Background Image</label>
-          <input
-            type="text"
-            id={`backgroundImage${index}`}
-            placeholder="Background Image"
-            value={slide.backgroundImage}
-            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
-            onChange={(e) =>
-              handleChange(index, "backgroundImage", e.target.value)
-            }
-          />
-
-          <label htmlFor={`mainImage${index}`}>Main Image</label>
-          <input
-            type="text"
-            id={`mainImage${index}`}
-            placeholder="Main Image"
-            value={slide.mainImage}
-            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
-            onChange={(e) =>
-              handleChange(index, "mainImage", e.target.value)
-            }
-          />
-
-          <label htmlFor={`mainText${index}`}>Main Text</label>
-          <input
-            type="text"
-            id={`mainText${index}`}
-            placeholder="Main text"
-            value={slide.mainText}
-            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
-            onChange={(e) =>
-              handleChange(index, "mainText", e.target.value)
-            }
-          />
-
-          <label htmlFor={`subText${index}`}>Sub Text</label>
-          <input
-            type="text"
-            id={`subText${index}`}
-            placeholder="Sub text"
-            value={slide.subText}
-            className="w-full rounded text-white placeholder:text-white h-10 bg-red-500"
-            onChange={(e) =>
-              handleChange(index, "subText", e.target.value)
-            }
-          />
-
-          <label htmlFor={`buttonText${index}`}>Button Text</label>
-          <input
-            type="text"
-            id={`buttonText${index}`}
-            placeholder="Button text"
-            value={slide.buttonText}
-            className="w-full rounded text-white placeholder:gtext-white h-10 bg-red-500"
-            onChange={(e) =>
-              handleChange(index, "buttonText", e.target.value)
-            }
-          />
-
-          <div className="flex items-center mt-6">
-            <button
-              className="p-2 px-4 m-1 bg-black whitespace-nowrap text-white font-bold text-lg rounded hover:bg-gray-200 hover:text-black transition-all"
-              onClick={() => toggleBlur(index)}
+          <div className="flex flex-col items-center">
+            <h3 className="font-bold sm:text-xl mt-5">Slider {index + 1}</h3>
+           <div className="flex sm:flex-row flex-col items-center gap-2">
+           <button
+              className="px-8 bg-blue-500 rounded hover:bg-black hover:text-blue-500 transition-all p-2"
+              onClick={() => openModal(index)}
             >
-              {slide.isBlur ? "Blur closed" : "Blur Open"}
+              Edit
             </button>
             <button
-              className="flex items-center justify-center bg-red-500 text-white rounded-full p-2 focus:outline-none hover:bg-red-600 transition-all duration-300"
+              className="px-8 bg-red-500 rounded hover:bg-black hover:text-red-500 transition-all p-2"
               onClick={() => removeSlide(index)}
             >
               Delete
             </button>
+           </div>
           </div>
+
+          {showModal && currentSlideIndex === index && (
+            <div className="fixed top-0 left-0 z-50 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center">
+      <ModalForm
+                slide={slide}
+                handleChange={handleChange}
+                toggleBlur={toggleBlur}
+                handleNewButton={handleNewButton}
+                setShowNewButton={setShowNewButton}
+               index={index}
+                closeModal={closeModal}
+              />
+            </div>
+          )}
         </div>
       ))}
     </div>
