@@ -4,7 +4,7 @@ import SliderNav from "./components/SliderNav";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay, } from "swiper/modules";
 import SliderForm from "./components/SliderForm";
 import BgPhoto from "../public/bgPhoto.jpg";
 
@@ -30,7 +30,14 @@ function Slider() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [delay, setDelay] = useState(4700);
 
-  
+  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageChange = (event) => {
+      const selectedFile = event.target.files[0];
+      
+      if (selectedFile) {
+        setSelectedImage(selectedFile);
+      }
+    };
   useEffect(() => {
     const savedSlides = JSON.parse(localStorage.getItem("slides"));
     if (savedSlides) {
@@ -121,6 +128,9 @@ function Slider() {
         <SliderForm
           slides={slides}
           handleChange={handleChange}
+          setSelectedImage={setSelectedImage}
+          handleImageChange={handleImageChange}
+          selectedImage={selectedImage}
           toggleBlur={toggleBlur}
           removeSlide={removeSlide}
         />
@@ -152,20 +162,18 @@ function Slider() {
         </button>
       </div>
 
+ 
       <Swiper
         spaceBetween={50}
-        rewind={true}
         slidesPerView={1}
-        pagination={true}
-        modules={[Pagination, Autoplay]}
-        initialSlide={currentSlideIndex}
-        autoplay={{
-          delay: delay,
-          disableOnInteraction: false,
-        }}
+        pagination={{ clickable: true }}
+        modules={[ Autoplay, Pagination]}
+        effect={'fade'}
+        autoplay={{ delay: delay, disableOnInteraction: false }}
         onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
         navigation={false}
       >
+  {/* ... */}
         {slides.map((slide, index) => (
           <div key={index} className="relative">
             <SwiperSlide>
@@ -179,7 +187,7 @@ function Slider() {
                 <div className="flex mx-auto max-w-[1400px] justify-between items-center absolute inset-0 sm:px-4">
                   <div>
                     <img
-                      className="sm:w-[600px] w-screen  mb-4 sm:mb-0 h-[350px] z-50 rounded object-cover"
+                      className="sm:w-[600px] w-screen  mb-4 sm:mb-0 h-[350px]  rounded object-cover"
                       src={slide.mainImage}
                       alt=""
                       style={{width:slide.mainImageWidth,height:slide.mainImageHeight}}
@@ -210,7 +218,10 @@ function Slider() {
                     </button>
                   </div>
                 </div>
-                        <SliderNav/>
+                        <SliderNav
+                        selectedImage={selectedImage}
+                       
+                        />
               </div>
             </SwiperSlide>
           </div>
